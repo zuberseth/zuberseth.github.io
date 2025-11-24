@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuber Seth</title>
+    
+    <!-- Google Fonts: Lora ONLY -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FDFBF7', // Warm, paper-like background
+                        ink: '#2C2C2C',   // Softer than pure black
+                        subtle: '#6B6B6B',
+                        accent: '#8C3A3A', // Muted red for links/accents
+                    },
+                    fontFamily: {
+                        serif: ['Lora', 'serif'], // Only Lora
+                    },
+                    fontSize: {
+                        // STRICT 2 SIZES ONLY
+                        'base': '1.125rem', // 18px (Body) - mapped to text-base/lg usage
+                        'display': '1.875rem', // 30px (Display) - mapped to text-3xl usage
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FDFBF7;
+            color: #2C2C2C;
+            font-family: 'Lora', serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+            font-size: 1.125rem; /* Enforce Base Size */
+        }
+
+        /* Custom Selection Color */
+        ::selection {
+            background: #EDE8D5;
+            color: #1A1A1A;
+        }
+
+        /* Subtle Fade In Animation */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+
+        /* Minimalist Link Hover */
+        .hover-link {
+            position: relative;
+            text-decoration: none;
+            color: #2C2C2C;
+            transition: color 0.2s;
+        }
+        
+        .hover-link:hover {
+            color: #8C3A3A;
+        }
+
+        /* Card Hover Effect */
+        .card {
+            transition: opacity 0.2s ease;
+        }
+        .card:hover {
+            opacity: 0.8;
+        }
+
+        /* Timeline Dot */
+        .timeline-dot {
+            position: absolute;
+            left: -6px; 
+            top: 10px; /* Adjusted for larger font baseline */
+            height: 9px;
+            width: 9px;
+            border-radius: 50%;
+            background-color: #FDFBF7;
+            border: 1px solid #2C2C2C; /* Thinner, sharper border */
+            transition: background-color 0.2s;
+        }
+        .group:hover .timeline-dot {
+            background-color: #8C3A3A;
+            border-color: #8C3A3A;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen px-6 py-12 md:px-12 md:py-24 max-w-4xl mx-auto flex flex-col justify-between">
+
+    <!-- Header / Navigation -->
+    <header class="flex flex-col md:flex-row justify-between items-baseline mb-20 fade-in gap-6">
+        <!-- Size 2 (Display) -->
+        <h1 class="text-display font-medium tracking-tight">Zuber Seth</h1>
+        
+        <!-- Size 1 (Base) -->
+        <nav class="flex gap-6 text-base text-subtle">
+            <a href="#about" class="hover:text-ink transition-colors">About</a>
+            <a href="#work" class="hover:text-ink transition-colors">Work</a>
+            <a href="#timeline" class="hover:text-ink transition-colors">Timeline</a>
+            <a href="#media" class="hover:text-ink transition-colors">Media</a>
+            <a href="mailto:contact@creia.com" class="hover:text-ink transition-colors">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section id="about" class="mb-24 fade-in delay-100">
+            <!-- Size 2 (Display) -->
+            <p class="text-display font-medium leading-tight text-ink mb-10">
+                I am the Founder and CEO of <span class="italic text-accent">creia</span>.
+            </p>
+            
+            <!-- Size 1 (Base) -->
+            <div class="text-base text-subtle max-w-2xl">
+                <p class="mb-6">
+                    Based in London, I build defining products at the intersection of wellness and performance. My background spans quantitative finance, artificial intelligence, and algorithmic trading.
+                </p>
+                <p>
+                    Previously, I founded Orchid, an autonomous AI analyst for institutional asset management. Now, I am focused on democratizing access to cognitive and physical longevity through minimalist, high-performance formulation.
+                </p>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <hr class="border-gray-200 mb-20 fade-in delay-200 w-full border-t opacity-50">
+
+        <!-- Work Section -->
+        <section id="work" class="mb-24 fade-in delay-200">
+            <!-- Size 1 (Base), Uppercase for hierarchy -->
+            <h2 class="text-base font-bold uppercase tracking-widest text-ink mb-10">Current Venture</h2>
+            
+            <div class="group block no-underline card">
+                <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-4">
+                    <!-- Size 1 (Base), Medium weight -->
+                    <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">creia</h3>
+                    <!-- Size 1 (Base), Italic for differentiation -->
+                    <span class="text-base italic text-subtle">2025 — Present</span>
+                </div>
+                
+                <div class="text-base text-subtle mb-6 max-w-2xl">
+                    <p class="mb-4">
+                        A premium, holistic staple for brain and body wellbeing. We are redefining creatine for the modern woman—moving away from the "gym-muscle" aesthetics of traditional sports nutrition toward a minimalist, essential daily ritual.
+                    </p>
+                    <p class="mb-6">
+                        creia combines Creapure®, the world's purest creatine, with a hydration-focused electrolyte profile. No fillers, no sugar, no artificial additives. Just the cleanest cognitive and physical fuel on the market.
+                    </p>
+                </div>
+
+                <!-- Text-only tags to maintain "2 sizes" rule -->
+                <div class="text-base text-subtle italic">
+                    Wellness &nbsp;/&nbsp; Consumer &nbsp;/&nbsp; London
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section id="timeline" class="mb-24 fade-in delay-300">
+            <h2 class="text-base font-bold uppercase tracking-widest text-ink mb-12">Career Timeline</h2>
+            
+            <div class="border-l border-gray-300 ml-2 space-y-16 pb-2">
+                
+                <!-- Role 1: creia -->
+                <div class="relative pl-10 group">
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                        <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">Founder & CEO</h3>
+                        <span class="text-base italic text-subtle">Nov 2025 — Present</span>
+                    </div>
+                    <div class="text-base text-ink mb-4 italic">creia</div>
+                    <p class="text-base text-subtle leading-relaxed max-w-2xl">
+                         Building the world's cleanest flavoured creatine. Majority owned by Healf.
+                    </p>
+                </div>
+
+                <!-- Role 2: EF -->
+                <div class="relative pl-10 group">
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                        <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">Founder in Residence</h3>
+                        <span class="text-base italic text-subtle">Oct 2025 — Present</span>
+                    </div>
+                    <div class="text-base text-ink mb-4 italic">Entrepreneurs First</div>
+                    <p class="text-base text-subtle leading-relaxed max-w-2xl">
+                        Backed by Reid Hoffman, Demis Hassabis, and the Collison brothers to build defining companies.
+                    </p>
+                </div>
+
+                <!-- Role 3: Orchid -->
+                <div class="relative pl-10 group">
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                        <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">Founder & Managing Partner</h3>
+                        <span class="text-base italic text-subtle">May 2024 — Oct 2025</span>
+                    </div>
+                    <div class="text-base text-ink mb-4 italic">Orchid</div>
+                    <div class="text-base text-subtle leading-relaxed max-w-2xl">
+                        <p class="mb-4">
+                            Built the first autonomous AI analyst for hedge funds. We moved beyond "copilots" to fully autonomous agents capable of independent model research, macro analysis, and alpha generation. 
+                        </p>
+                        <p>
+                             The platform democratized access to institutional-grade analysis, automating the routine to free analysts for high-level strategy. Advised on over $8B in assets. Exited.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Role 4: Various Ventures -->
+                <div class="relative pl-10 group">
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                        <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">Various Ventures</h3>
+                        <span class="text-base italic text-subtle">2018 — 2024</span>
+                    </div>
+                    <div class="text-base text-ink mb-4 italic">Founding & Analysis</div>
+                    <ul class="list-none space-y-6 text-base text-subtle leading-relaxed max-w-2xl">
+                        <li class="pl-0">
+                            <span class="text-ink font-medium block mb-1">Co-founder, Roblox Bloomberg Terminal</span>
+                            Grew to 16M+ monthly visits, becoming the largest website for Roblox. Exited aged 16.
+                        </li>
+                        <li class="pl-0">
+                            <span class="text-ink font-medium block mb-1">Analyst, State Street</span>
+                            Youngest analyst working in a London-based $300M AUM L/S Equity IM fund.
+                        </li>
+                        <li class="pl-0">
+                            <span class="text-ink font-medium block mb-1">Hedge Fund Founder</span>
+                            Started a fund backed by the Kuwait Investment Authority at 20. Pivoted to SaaS.
+                        </li>
+                        <li class="pl-0">
+                            <span class="text-ink font-medium block mb-1">AI Research</span>
+                            Queens' College, Cambridge and LSE.
+                        </li>
+                        <li class="pl-0">
+                            <span class="text-ink font-medium block mb-1">Associate, FCA</span>
+                            Asset Management & Custody Team, focusing on Alternative Investments & Algorithmic Trading.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Role 5: Sports -->
+                <div class="relative pl-10 group">
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                        <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">Quarterback</h3>
+                        <span class="text-base italic text-subtle">2019 — 2021</span>
+                    </div>
+                    <div class="text-base text-ink mb-4 italic">Team GB & NFL UK</div>
+                    <p class="text-base text-subtle leading-relaxed max-w-2xl">
+                        Played for GB Lions (Team GB) and the NFL Academy (NFL UK & Ireland).
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Media / Writing Section -->
+        <section id="media" class="mb-24 fade-in delay-400">
+            <h2 class="text-base font-bold uppercase tracking-widest text-ink mb-12">Selected Conversations</h2>
+            
+            <div class="space-y-12">
+                <article class="card">
+                    <a href="https://www.youtube.com/watch?v=qIioqp415cA" target="_blank" class="block group">
+                        <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                            <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">
+                                FinTech Focus TV: Why SaaS is Dead
+                            </h3>
+                            <span class="text-base italic text-subtle">July 2025</span>
+                        </div>
+                        <p class="text-base text-subtle leading-relaxed">
+                            Discussing the evolution of Orchid from a hedge fund concept to an AI platform, and why the traditional software-as-a-service model is failing in the age of autonomous agents.
+                        </p>
+                    </a>
+                </article>
+
+                <article class="card">
+                    <a href="https://www.youtube.com/watch?v=qvwJTA5xK_w" target="_blank" class="block group">
+                        <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                            <h3 class="text-base font-medium text-ink group-hover:text-accent transition-colors">
+                                The Quant / Financial Engineering Podcast
+                            </h3>
+                            <span class="text-base italic text-subtle">June 2025</span>
+                        </div>
+                        <p class="text-base text-subtle leading-relaxed">
+                            A deep dive into my background in mathematics, the early days of seed funding, and the technical challenges of creating an autonomous analyst.
+                        </p>
+                    </a>
+                </article>
+            </div>
+        </section>
+
+        <!-- Philosophy -->
+        <section class="mb-24 fade-in delay-400">
+            <h2 class="text-base font-bold uppercase tracking-widest text-ink mb-12">Notes</h2>
+            <ul class="list-none pl-0">
+                <li class="pl-6 border-l border-gray-300 hover:border-accent transition-colors">
+                    <p class="text-base text-ink italic">"The best products don't just solve a problem; they create a ritual. Essential, effective, and invisible."</p>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 pt-12 border-t border-gray-200 opacity-50 flex flex-col md:flex-row justify-between items-center text-base text-subtle fade-in delay-400">
+        <div class="mb-4 md:mb-0">
+            &copy; 2025 Zuber Seth. London, UK.
+        </div>
+        <div class="flex gap-8">
+            <a href="https://www.linkedin.com" target="_blank" class="hover:text-ink transition-colors flex items-center gap-2">
+                LinkedIn
+            </a>
+            <a href="https://twitter.com" target="_blank" class="hover:text-ink transition-colors flex items-center gap-2">
+                Twitter
+            </a>
+            <a href="mailto:contact@creia.com" class="hover:text-ink transition-colors flex items-center gap-2">
+                Email
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons (Used minimally if needed, but text preferred for strict style)
+        lucide.createIcons();
+
+        // Simple smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
