@@ -1,0 +1,395 @@
+var Me=Object.defineProperty;var le=o=>{throw TypeError(o)};var Ce=(o,e,t)=>e in o?Me(o,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):o[e]=t;var m=(o,e,t)=>Ce(o,typeof e!="symbol"?e+"":e,t),Pe=(o,e,t)=>e.has(o)||le("Cannot "+t);var ce=(o,e,t)=>e.has(o)?le("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(o):e.set(o,t);var q=(o,e,t)=>(Pe(o,e,"access private method"),t);(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))n(s);new MutationObserver(s=>{for(const r of s)if(r.type==="childList")for(const i of r.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&n(i)}).observe(document,{childList:!0,subtree:!0});function t(s){const r={};return s.integrity&&(r.integrity=s.integrity),s.referrerPolicy&&(r.referrerPolicy=s.referrerPolicy),s.crossOrigin==="use-credentials"?r.credentials="include":s.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function n(s){if(s.ep)return;s.ep=!0;const r=t(s);fetch(s.href,r)}})();class De{constructor(){this.routes={},this.currentRoute=null,window.addEventListener("hashchange",()=>this.handleRoute()),window.addEventListener("load",()=>this.handleRoute())}on(e,t){return this.routes[e]=t,this}navigate(e){window.location.hash=e}handleRoute(){const e=window.location.hash.slice(1)||"/",[t,...n]=e.split("/").filter(Boolean),s="/"+(t||"");this.updateNavLinks(s);let r=this.routes[s],i=n;if(!r){for(const[a,l]of Object.entries(this.routes))if(a.includes(":")){const u=a.split("/").filter(Boolean),d=[t,...n];if(u.length===d.length){let h=!0;i={};for(let c=0;c<u.length;c++)if(u[c].startsWith(":"))i[u[c].slice(1)]=d[c];else if(u[c]!==d[c]){h=!1;break}if(h){r=l;break}}}}r?(this.currentRoute=s,r(i)):this.show404()}updateNavLinks(e){document.querySelectorAll(".nav-link").forEach(t=>{const n=t.getAttribute("href").slice(1);n===e||e.startsWith(n)&&n!=="/"?t.classList.add("active"):t.classList.remove("active")})}show404(){const e=document.getElementById("main-content");e.innerHTML=`
+            <div class="container">
+                <div class="empty-state fade-in">
+                    <h2 class="empty-state-title">Page Not Found</h2>
+                    <p class="empty-state-text">The page you're looking for doesn't exist.</p>
+                    <br>
+                    <a href="#/" class="btn btn-primary">Go Home</a>
+                </div>
+            </div>
+        `}}function V(){return{async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null}}let L=V();function ke(o){L=o}const be=/[&<>"']/,Ue=new RegExp(be.source,"g"),we=/[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/,qe=new RegExp(we.source,"g"),Oe={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},de=o=>Oe[o];function b(o,e){if(e){if(be.test(o))return o.replace(Ue,de)}else if(we.test(o))return o.replace(qe,de);return o}const He=/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;function je(o){return o.replace(He,(e,t)=>(t=t.toLowerCase(),t==="colon"?":":t.charAt(0)==="#"?t.charAt(1)==="x"?String.fromCharCode(parseInt(t.substring(2),16)):String.fromCharCode(+t.substring(1)):""))}const Ne=/(^|[^\[])\^/g;function f(o,e){let t=typeof o=="string"?o:o.source;e=e||"";const n={replace:(s,r)=>{let i=typeof r=="string"?r:r.source;return i=i.replace(Ne,"$1"),t=t.replace(s,i),n},getRegex:()=>new RegExp(t,e)};return n}function ue(o){try{o=encodeURI(o).replace(/%25/g,"%")}catch{return null}return o}const M={exec:()=>null};function pe(o,e){const t=o.replace(/\|/g,(r,i,a)=>{let l=!1,u=i;for(;--u>=0&&a[u]==="\\";)l=!l;return l?"|":" |"}),n=t.split(/ \|/);let s=0;if(n[0].trim()||n.shift(),n.length>0&&!n[n.length-1].trim()&&n.pop(),e)if(n.length>e)n.splice(e);else for(;n.length<e;)n.push("");for(;s<n.length;s++)n[s]=n[s].trim().replace(/\\\|/g,"|");return n}function O(o,e,t){const n=o.length;if(n===0)return"";let s=0;for(;s<n&&o.charAt(n-s-1)===e;)s++;return o.slice(0,n-s)}function We(o,e){if(o.indexOf(e[1])===-1)return-1;let t=0;for(let n=0;n<o.length;n++)if(o[n]==="\\")n++;else if(o[n]===e[0])t++;else if(o[n]===e[1]&&(t--,t<0))return n;return-1}function he(o,e,t,n){const s=e.href,r=e.title?b(e.title):null,i=o[1].replace(/\\([\[\]])/g,"$1");if(o[0].charAt(0)!=="!"){n.state.inLink=!0;const a={type:"link",raw:t,href:s,title:r,text:i,tokens:n.inlineTokens(i)};return n.state.inLink=!1,a}return{type:"image",raw:t,href:s,title:r,text:b(i)}}function Ze(o,e){const t=o.match(/^(\s+)(?:```)/);if(t===null)return e;const n=t[1];return e.split(`
+`).map(s=>{const r=s.match(/^\s+/);if(r===null)return s;const[i]=r;return i.length>=n.length?s.slice(n.length):s}).join(`
+`)}class j{constructor(e){m(this,"options");m(this,"rules");m(this,"lexer");this.options=e||L}space(e){const t=this.rules.block.newline.exec(e);if(t&&t[0].length>0)return{type:"space",raw:t[0]}}code(e){const t=this.rules.block.code.exec(e);if(t){const n=t[0].replace(/^ {1,4}/gm,"");return{type:"code",raw:t[0],codeBlockStyle:"indented",text:this.options.pedantic?n:O(n,`
+`)}}}fences(e){const t=this.rules.block.fences.exec(e);if(t){const n=t[0],s=Ze(n,t[3]||"");return{type:"code",raw:n,lang:t[2]?t[2].trim().replace(this.rules.inline.anyPunctuation,"$1"):t[2],text:s}}}heading(e){const t=this.rules.block.heading.exec(e);if(t){let n=t[2].trim();if(/#$/.test(n)){const s=O(n,"#");(this.options.pedantic||!s||/ $/.test(s))&&(n=s.trim())}return{type:"heading",raw:t[0],depth:t[1].length,text:n,tokens:this.lexer.inline(n)}}}hr(e){const t=this.rules.block.hr.exec(e);if(t)return{type:"hr",raw:t[0]}}blockquote(e){const t=this.rules.block.blockquote.exec(e);if(t){let n=t[0].replace(/\n {0,3}((?:=+|-+) *)(?=\n|$)/g,`
+    $1`);n=O(n.replace(/^ *>[ \t]?/gm,""),`
+`);const s=this.lexer.state.top;this.lexer.state.top=!0;const r=this.lexer.blockTokens(n);return this.lexer.state.top=s,{type:"blockquote",raw:t[0],tokens:r,text:n}}}list(e){let t=this.rules.block.list.exec(e);if(t){let n=t[1].trim();const s=n.length>1,r={type:"list",raw:"",ordered:s,start:s?+n.slice(0,-1):"",loose:!1,items:[]};n=s?`\\d{1,9}\\${n.slice(-1)}`:`\\${n}`,this.options.pedantic&&(n=s?n:"[*+-]");const i=new RegExp(`^( {0,3}${n})((?:[	 ][^\\n]*)?(?:\\n|$))`);let a="",l="",u=!1;for(;e;){let d=!1;if(!(t=i.exec(e))||this.rules.block.hr.test(e))break;a=t[0],e=e.substring(a.length);let h=t[2].split(`
+`,1)[0].replace(/^\t+/,F=>" ".repeat(3*F.length)),c=e.split(`
+`,1)[0],p=0;this.options.pedantic?(p=2,l=h.trimStart()):(p=t[2].search(/[^ ]/),p=p>4?1:p,l=h.slice(p),p+=t[1].length);let k=!1;if(!h&&/^ *$/.test(c)&&(a+=c+`
+`,e=e.substring(c.length+1),d=!0),!d){const F=new RegExp(`^ {0,${Math.min(3,p-1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ 	][^\\n]*)?(?:\\n|$))`),re=new RegExp(`^ {0,${Math.min(3,p-1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`),oe=new RegExp(`^ {0,${Math.min(3,p-1)}}(?:\`\`\`|~~~)`),ae=new RegExp(`^ {0,${Math.min(3,p-1)}}#`);for(;e;){const Q=e.split(`
+`,1)[0];if(c=Q,this.options.pedantic&&(c=c.replace(/^ {1,4}(?=( {4})*[^ ])/g,"  ")),oe.test(c)||ae.test(c)||F.test(c)||re.test(e))break;if(c.search(/[^ ]/)>=p||!c.trim())l+=`
+`+c.slice(p);else{if(k||h.search(/[^ ]/)>=4||oe.test(h)||ae.test(h)||re.test(h))break;l+=`
+`+c}!k&&!c.trim()&&(k=!0),a+=Q+`
+`,e=e.substring(Q.length+1),h=c.slice(p)}}r.loose||(u?r.loose=!0:/\n *\n *$/.test(a)&&(u=!0));let y=null,I;this.options.gfm&&(y=/^\[[ xX]\] /.exec(l),y&&(I=y[0]!=="[ ] ",l=l.replace(/^\[[ xX]\] +/,""))),r.items.push({type:"list_item",raw:a,task:!!y,checked:I,loose:!1,text:l,tokens:[]}),r.raw+=a}r.items[r.items.length-1].raw=a.trimEnd(),r.items[r.items.length-1].text=l.trimEnd(),r.raw=r.raw.trimEnd();for(let d=0;d<r.items.length;d++)if(this.lexer.state.top=!1,r.items[d].tokens=this.lexer.blockTokens(r.items[d].text,[]),!r.loose){const h=r.items[d].tokens.filter(p=>p.type==="space"),c=h.length>0&&h.some(p=>/\n.*\n/.test(p.raw));r.loose=c}if(r.loose)for(let d=0;d<r.items.length;d++)r.items[d].loose=!0;return r}}html(e){const t=this.rules.block.html.exec(e);if(t)return{type:"html",block:!0,raw:t[0],pre:t[1]==="pre"||t[1]==="script"||t[1]==="style",text:t[0]}}def(e){const t=this.rules.block.def.exec(e);if(t){const n=t[1].toLowerCase().replace(/\s+/g," "),s=t[2]?t[2].replace(/^<(.*)>$/,"$1").replace(this.rules.inline.anyPunctuation,"$1"):"",r=t[3]?t[3].substring(1,t[3].length-1).replace(this.rules.inline.anyPunctuation,"$1"):t[3];return{type:"def",tag:n,raw:t[0],href:s,title:r}}}table(e){const t=this.rules.block.table.exec(e);if(!t||!/[:|]/.test(t[2]))return;const n=pe(t[1]),s=t[2].replace(/^\||\| *$/g,"").split("|"),r=t[3]&&t[3].trim()?t[3].replace(/\n[ \t]*$/,"").split(`
+`):[],i={type:"table",raw:t[0],header:[],align:[],rows:[]};if(n.length===s.length){for(const a of s)/^ *-+: *$/.test(a)?i.align.push("right"):/^ *:-+: *$/.test(a)?i.align.push("center"):/^ *:-+ *$/.test(a)?i.align.push("left"):i.align.push(null);for(const a of n)i.header.push({text:a,tokens:this.lexer.inline(a)});for(const a of r)i.rows.push(pe(a,i.header.length).map(l=>({text:l,tokens:this.lexer.inline(l)})));return i}}lheading(e){const t=this.rules.block.lheading.exec(e);if(t)return{type:"heading",raw:t[0],depth:t[2].charAt(0)==="="?1:2,text:t[1],tokens:this.lexer.inline(t[1])}}paragraph(e){const t=this.rules.block.paragraph.exec(e);if(t){const n=t[1].charAt(t[1].length-1)===`
+`?t[1].slice(0,-1):t[1];return{type:"paragraph",raw:t[0],text:n,tokens:this.lexer.inline(n)}}}text(e){const t=this.rules.block.text.exec(e);if(t)return{type:"text",raw:t[0],text:t[0],tokens:this.lexer.inline(t[0])}}escape(e){const t=this.rules.inline.escape.exec(e);if(t)return{type:"escape",raw:t[0],text:b(t[1])}}tag(e){const t=this.rules.inline.tag.exec(e);if(t)return!this.lexer.state.inLink&&/^<a /i.test(t[0])?this.lexer.state.inLink=!0:this.lexer.state.inLink&&/^<\/a>/i.test(t[0])&&(this.lexer.state.inLink=!1),!this.lexer.state.inRawBlock&&/^<(pre|code|kbd|script)(\s|>)/i.test(t[0])?this.lexer.state.inRawBlock=!0:this.lexer.state.inRawBlock&&/^<\/(pre|code|kbd|script)(\s|>)/i.test(t[0])&&(this.lexer.state.inRawBlock=!1),{type:"html",raw:t[0],inLink:this.lexer.state.inLink,inRawBlock:this.lexer.state.inRawBlock,block:!1,text:t[0]}}link(e){const t=this.rules.inline.link.exec(e);if(t){const n=t[2].trim();if(!this.options.pedantic&&/^</.test(n)){if(!/>$/.test(n))return;const i=O(n.slice(0,-1),"\\");if((n.length-i.length)%2===0)return}else{const i=We(t[2],"()");if(i>-1){const l=(t[0].indexOf("!")===0?5:4)+t[1].length+i;t[2]=t[2].substring(0,i),t[0]=t[0].substring(0,l).trim(),t[3]=""}}let s=t[2],r="";if(this.options.pedantic){const i=/^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(s);i&&(s=i[1],r=i[3])}else r=t[3]?t[3].slice(1,-1):"";return s=s.trim(),/^</.test(s)&&(this.options.pedantic&&!/>$/.test(n)?s=s.slice(1):s=s.slice(1,-1)),he(t,{href:s&&s.replace(this.rules.inline.anyPunctuation,"$1"),title:r&&r.replace(this.rules.inline.anyPunctuation,"$1")},t[0],this.lexer)}}reflink(e,t){let n;if((n=this.rules.inline.reflink.exec(e))||(n=this.rules.inline.nolink.exec(e))){const s=(n[2]||n[1]).replace(/\s+/g," "),r=t[s.toLowerCase()];if(!r){const i=n[0].charAt(0);return{type:"text",raw:i,text:i}}return he(n,r,n[0],this.lexer)}}emStrong(e,t,n=""){let s=this.rules.inline.emStrongLDelim.exec(e);if(!s||s[3]&&n.match(/[\p{L}\p{N}]/u))return;if(!(s[1]||s[2]||"")||!n||this.rules.inline.punctuation.exec(n)){const i=[...s[0]].length-1;let a,l,u=i,d=0;const h=s[0][0]==="*"?this.rules.inline.emStrongRDelimAst:this.rules.inline.emStrongRDelimUnd;for(h.lastIndex=0,t=t.slice(-1*e.length+i);(s=h.exec(t))!=null;){if(a=s[1]||s[2]||s[3]||s[4]||s[5]||s[6],!a)continue;if(l=[...a].length,s[3]||s[4]){u+=l;continue}else if((s[5]||s[6])&&i%3&&!((i+l)%3)){d+=l;continue}if(u-=l,u>0)continue;l=Math.min(l,l+u+d);const c=[...s[0]][0].length,p=e.slice(0,i+s.index+c+l);if(Math.min(i,l)%2){const y=p.slice(1,-1);return{type:"em",raw:p,text:y,tokens:this.lexer.inlineTokens(y)}}const k=p.slice(2,-2);return{type:"strong",raw:p,text:k,tokens:this.lexer.inlineTokens(k)}}}}codespan(e){const t=this.rules.inline.code.exec(e);if(t){let n=t[2].replace(/\n/g," ");const s=/[^ ]/.test(n),r=/^ /.test(n)&&/ $/.test(n);return s&&r&&(n=n.substring(1,n.length-1)),n=b(n,!0),{type:"codespan",raw:t[0],text:n}}}br(e){const t=this.rules.inline.br.exec(e);if(t)return{type:"br",raw:t[0]}}del(e){const t=this.rules.inline.del.exec(e);if(t)return{type:"del",raw:t[0],text:t[2],tokens:this.lexer.inlineTokens(t[2])}}autolink(e){const t=this.rules.inline.autolink.exec(e);if(t){let n,s;return t[2]==="@"?(n=b(t[1]),s="mailto:"+n):(n=b(t[1]),s=n),{type:"link",raw:t[0],text:n,href:s,tokens:[{type:"text",raw:n,text:n}]}}}url(e){var n;let t;if(t=this.rules.inline.url.exec(e)){let s,r;if(t[2]==="@")s=b(t[0]),r="mailto:"+s;else{let i;do i=t[0],t[0]=((n=this.rules.inline._backpedal.exec(t[0]))==null?void 0:n[0])??"";while(i!==t[0]);s=b(t[0]),t[1]==="www."?r="http://"+t[0]:r=t[0]}return{type:"link",raw:t[0],text:s,href:r,tokens:[{type:"text",raw:s,text:s}]}}}inlineText(e){const t=this.rules.inline.text.exec(e);if(t){let n;return this.lexer.state.inRawBlock?n=t[0]:n=b(t[0]),{type:"text",raw:t[0],text:n}}}}const Fe=/^(?: *(?:\n|$))+/,Qe=/^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/,Ge=/^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/,P=/^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/,Ke=/^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/,ve=/(?:[*+-]|\d{1,9}[.)])/,ye=f(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g,ve).replace(/blockCode/g,/ {4}/).replace(/fences/g,/ {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g,/ {0,3}>/).replace(/heading/g,/ {0,3}#{1,6}/).replace(/html/g,/ {0,3}<[^\n>]+>\n/).getRegex(),X=/^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,Je=/^[^\n]+/,Y=/(?!\s*\])(?:\\.|[^\[\]\\])+/,Ve=f(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label",Y).replace("title",/(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(),Xe=f(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g,ve).getRegex(),Z="address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul",ee=/<!--(?:-?>|[\s\S]*?(?:-->|$))/,Ye=f("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))","i").replace("comment",ee).replace("tag",Z).replace("attribute",/ +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(),xe=f(X).replace("hr",P).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("|table","").replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",Z).getRegex(),et=f(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph",xe).getRegex(),te={blockquote:et,code:Qe,def:Ve,fences:Ge,heading:Ke,hr:P,html:Ye,lheading:ye,list:Xe,newline:Fe,paragraph:xe,table:M,text:Je},ge=f("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr",P).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("blockquote"," {0,3}>").replace("code"," {4}[^\\n]").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",Z).getRegex(),tt={...te,table:ge,paragraph:f(X).replace("hr",P).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("table",ge).replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",Z).getRegex()},nt={...te,html:f(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment",ee).replace(/tag/g,"(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,heading:/^(#{1,6})(.*)(?:\n+|$)/,fences:M,lheading:/^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,paragraph:f(X).replace("hr",P).replace("heading",` *#{1,6} *[^
+]`).replace("lheading",ye).replace("|table","").replace("blockquote"," {0,3}>").replace("|fences","").replace("|list","").replace("|html","").replace("|tag","").getRegex()},$e=/^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,st=/^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,Te=/^( {2,}|\\)\n(?!\s*$)/,it=/^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,D="\\p{P}\\p{S}",rt=f(/^((?![*_])[\spunctuation])/,"u").replace(/punctuation/g,D).getRegex(),ot=/\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g,at=f(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/,"u").replace(/punct/g,D).getRegex(),lt=f("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])","gu").replace(/punct/g,D).getRegex(),ct=f("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])","gu").replace(/punct/g,D).getRegex(),dt=f(/\\([punct])/,"gu").replace(/punct/g,D).getRegex(),ut=f(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme",/[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email",/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(),pt=f(ee).replace("(?:-->|$)","-->").getRegex(),ht=f("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment",pt).replace("attribute",/\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(),N=/(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/,gt=f(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label",N).replace("href",/<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title",/"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(),Ee=f(/^!?\[(label)\]\[(ref)\]/).replace("label",N).replace("ref",Y).getRegex(),Ie=f(/^!?\[(ref)\](?:\[\])?/).replace("ref",Y).getRegex(),ft=f("reflink|nolink(?!\\()","g").replace("reflink",Ee).replace("nolink",Ie).getRegex(),ne={_backpedal:M,anyPunctuation:dt,autolink:ut,blockSkip:ot,br:Te,code:st,del:M,emStrongLDelim:at,emStrongRDelimAst:lt,emStrongRDelimUnd:ct,escape:$e,link:gt,nolink:Ie,punctuation:rt,reflink:Ee,reflinkSearch:ft,tag:ht,text:it,url:M},mt={...ne,link:f(/^!?\[(label)\]\((.*?)\)/).replace("label",N).getRegex(),reflink:f(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label",N).getRegex()},G={...ne,escape:f($e).replace("])","~|])").getRegex(),url:f(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,"i").replace("email",/[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),_backpedal:/(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,del:/^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,text:/^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/},kt={...G,br:f(Te).replace("{2,}","*").getRegex(),text:f(G.text).replace("\\b_","\\b_| {2,}\\n").replace(/\{2,\}/g,"*").getRegex()},H={normal:te,gfm:tt,pedantic:nt},B={normal:ne,gfm:G,breaks:kt,pedantic:mt};class x{constructor(e){m(this,"tokens");m(this,"options");m(this,"state");m(this,"tokenizer");m(this,"inlineQueue");this.tokens=[],this.tokens.links=Object.create(null),this.options=e||L,this.options.tokenizer=this.options.tokenizer||new j,this.tokenizer=this.options.tokenizer,this.tokenizer.options=this.options,this.tokenizer.lexer=this,this.inlineQueue=[],this.state={inLink:!1,inRawBlock:!1,top:!0};const t={block:H.normal,inline:B.normal};this.options.pedantic?(t.block=H.pedantic,t.inline=B.pedantic):this.options.gfm&&(t.block=H.gfm,this.options.breaks?t.inline=B.breaks:t.inline=B.gfm),this.tokenizer.rules=t}static get rules(){return{block:H,inline:B}}static lex(e,t){return new x(t).lex(e)}static lexInline(e,t){return new x(t).inlineTokens(e)}lex(e){e=e.replace(/\r\n|\r/g,`
+`),this.blockTokens(e,this.tokens);for(let t=0;t<this.inlineQueue.length;t++){const n=this.inlineQueue[t];this.inlineTokens(n.src,n.tokens)}return this.inlineQueue=[],this.tokens}blockTokens(e,t=[]){this.options.pedantic?e=e.replace(/\t/g,"    ").replace(/^ +$/gm,""):e=e.replace(/^( *)(\t+)/gm,(a,l,u)=>l+"    ".repeat(u.length));let n,s,r,i;for(;e;)if(!(this.options.extensions&&this.options.extensions.block&&this.options.extensions.block.some(a=>(n=a.call({lexer:this},e,t))?(e=e.substring(n.raw.length),t.push(n),!0):!1))){if(n=this.tokenizer.space(e)){e=e.substring(n.raw.length),n.raw.length===1&&t.length>0?t[t.length-1].raw+=`
+`:t.push(n);continue}if(n=this.tokenizer.code(e)){e=e.substring(n.raw.length),s=t[t.length-1],s&&(s.type==="paragraph"||s.type==="text")?(s.raw+=`
+`+n.raw,s.text+=`
+`+n.text,this.inlineQueue[this.inlineQueue.length-1].src=s.text):t.push(n);continue}if(n=this.tokenizer.fences(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.heading(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.hr(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.blockquote(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.list(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.html(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.def(e)){e=e.substring(n.raw.length),s=t[t.length-1],s&&(s.type==="paragraph"||s.type==="text")?(s.raw+=`
+`+n.raw,s.text+=`
+`+n.raw,this.inlineQueue[this.inlineQueue.length-1].src=s.text):this.tokens.links[n.tag]||(this.tokens.links[n.tag]={href:n.href,title:n.title});continue}if(n=this.tokenizer.table(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.lheading(e)){e=e.substring(n.raw.length),t.push(n);continue}if(r=e,this.options.extensions&&this.options.extensions.startBlock){let a=1/0;const l=e.slice(1);let u;this.options.extensions.startBlock.forEach(d=>{u=d.call({lexer:this},l),typeof u=="number"&&u>=0&&(a=Math.min(a,u))}),a<1/0&&a>=0&&(r=e.substring(0,a+1))}if(this.state.top&&(n=this.tokenizer.paragraph(r))){s=t[t.length-1],i&&s.type==="paragraph"?(s.raw+=`
+`+n.raw,s.text+=`
+`+n.text,this.inlineQueue.pop(),this.inlineQueue[this.inlineQueue.length-1].src=s.text):t.push(n),i=r.length!==e.length,e=e.substring(n.raw.length);continue}if(n=this.tokenizer.text(e)){e=e.substring(n.raw.length),s=t[t.length-1],s&&s.type==="text"?(s.raw+=`
+`+n.raw,s.text+=`
+`+n.text,this.inlineQueue.pop(),this.inlineQueue[this.inlineQueue.length-1].src=s.text):t.push(n);continue}if(e){const a="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(a);break}else throw new Error(a)}}return this.state.top=!0,t}inline(e,t=[]){return this.inlineQueue.push({src:e,tokens:t}),t}inlineTokens(e,t=[]){let n,s,r,i=e,a,l,u;if(this.tokens.links){const d=Object.keys(this.tokens.links);if(d.length>0)for(;(a=this.tokenizer.rules.inline.reflinkSearch.exec(i))!=null;)d.includes(a[0].slice(a[0].lastIndexOf("[")+1,-1))&&(i=i.slice(0,a.index)+"["+"a".repeat(a[0].length-2)+"]"+i.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex))}for(;(a=this.tokenizer.rules.inline.blockSkip.exec(i))!=null;)i=i.slice(0,a.index)+"["+"a".repeat(a[0].length-2)+"]"+i.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);for(;(a=this.tokenizer.rules.inline.anyPunctuation.exec(i))!=null;)i=i.slice(0,a.index)+"++"+i.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);for(;e;)if(l||(u=""),l=!1,!(this.options.extensions&&this.options.extensions.inline&&this.options.extensions.inline.some(d=>(n=d.call({lexer:this},e,t))?(e=e.substring(n.raw.length),t.push(n),!0):!1))){if(n=this.tokenizer.escape(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.tag(e)){e=e.substring(n.raw.length),s=t[t.length-1],s&&n.type==="text"&&s.type==="text"?(s.raw+=n.raw,s.text+=n.text):t.push(n);continue}if(n=this.tokenizer.link(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.reflink(e,this.tokens.links)){e=e.substring(n.raw.length),s=t[t.length-1],s&&n.type==="text"&&s.type==="text"?(s.raw+=n.raw,s.text+=n.text):t.push(n);continue}if(n=this.tokenizer.emStrong(e,i,u)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.codespan(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.br(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.del(e)){e=e.substring(n.raw.length),t.push(n);continue}if(n=this.tokenizer.autolink(e)){e=e.substring(n.raw.length),t.push(n);continue}if(!this.state.inLink&&(n=this.tokenizer.url(e))){e=e.substring(n.raw.length),t.push(n);continue}if(r=e,this.options.extensions&&this.options.extensions.startInline){let d=1/0;const h=e.slice(1);let c;this.options.extensions.startInline.forEach(p=>{c=p.call({lexer:this},h),typeof c=="number"&&c>=0&&(d=Math.min(d,c))}),d<1/0&&d>=0&&(r=e.substring(0,d+1))}if(n=this.tokenizer.inlineText(r)){e=e.substring(n.raw.length),n.raw.slice(-1)!=="_"&&(u=n.raw.slice(-1)),l=!0,s=t[t.length-1],s&&s.type==="text"?(s.raw+=n.raw,s.text+=n.text):t.push(n);continue}if(e){const d="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(d);break}else throw new Error(d)}}return t}}class W{constructor(e){m(this,"options");this.options=e||L}code(e,t,n){var r;const s=(r=(t||"").match(/^\S*/))==null?void 0:r[0];return e=e.replace(/\n$/,"")+`
+`,s?'<pre><code class="language-'+b(s)+'">'+(n?e:b(e,!0))+`</code></pre>
+`:"<pre><code>"+(n?e:b(e,!0))+`</code></pre>
+`}blockquote(e){return`<blockquote>
+${e}</blockquote>
+`}html(e,t){return e}heading(e,t,n){return`<h${t}>${e}</h${t}>
+`}hr(){return`<hr>
+`}list(e,t,n){const s=t?"ol":"ul",r=t&&n!==1?' start="'+n+'"':"";return"<"+s+r+`>
+`+e+"</"+s+`>
+`}listitem(e,t,n){return`<li>${e}</li>
+`}checkbox(e){return"<input "+(e?'checked="" ':"")+'disabled="" type="checkbox">'}paragraph(e){return`<p>${e}</p>
+`}table(e,t){return t&&(t=`<tbody>${t}</tbody>`),`<table>
+<thead>
+`+e+`</thead>
+`+t+`</table>
+`}tablerow(e){return`<tr>
+${e}</tr>
+`}tablecell(e,t){const n=t.header?"th":"td";return(t.align?`<${n} align="${t.align}">`:`<${n}>`)+e+`</${n}>
+`}strong(e){return`<strong>${e}</strong>`}em(e){return`<em>${e}</em>`}codespan(e){return`<code>${e}</code>`}br(){return"<br>"}del(e){return`<del>${e}</del>`}link(e,t,n){const s=ue(e);if(s===null)return n;e=s;let r='<a href="'+e+'"';return t&&(r+=' title="'+t+'"'),r+=">"+n+"</a>",r}image(e,t,n){const s=ue(e);if(s===null)return n;e=s;let r=`<img src="${e}" alt="${n}"`;return t&&(r+=` title="${t}"`),r+=">",r}text(e){return e}}class se{strong(e){return e}em(e){return e}codespan(e){return e}del(e){return e}html(e){return e}text(e){return e}link(e,t,n){return""+n}image(e,t,n){return""+n}br(){return""}}class ${constructor(e){m(this,"options");m(this,"renderer");m(this,"textRenderer");this.options=e||L,this.options.renderer=this.options.renderer||new W,this.renderer=this.options.renderer,this.renderer.options=this.options,this.textRenderer=new se}static parse(e,t){return new $(t).parse(e)}static parseInline(e,t){return new $(t).parseInline(e)}parse(e,t=!0){let n="";for(let s=0;s<e.length;s++){const r=e[s];if(this.options.extensions&&this.options.extensions.renderers&&this.options.extensions.renderers[r.type]){const i=r,a=this.options.extensions.renderers[i.type].call({parser:this},i);if(a!==!1||!["space","hr","heading","code","table","blockquote","list","html","paragraph","text"].includes(i.type)){n+=a||"";continue}}switch(r.type){case"space":continue;case"hr":{n+=this.renderer.hr();continue}case"heading":{const i=r;n+=this.renderer.heading(this.parseInline(i.tokens),i.depth,je(this.parseInline(i.tokens,this.textRenderer)));continue}case"code":{const i=r;n+=this.renderer.code(i.text,i.lang,!!i.escaped);continue}case"table":{const i=r;let a="",l="";for(let d=0;d<i.header.length;d++)l+=this.renderer.tablecell(this.parseInline(i.header[d].tokens),{header:!0,align:i.align[d]});a+=this.renderer.tablerow(l);let u="";for(let d=0;d<i.rows.length;d++){const h=i.rows[d];l="";for(let c=0;c<h.length;c++)l+=this.renderer.tablecell(this.parseInline(h[c].tokens),{header:!1,align:i.align[c]});u+=this.renderer.tablerow(l)}n+=this.renderer.table(a,u);continue}case"blockquote":{const i=r,a=this.parse(i.tokens);n+=this.renderer.blockquote(a);continue}case"list":{const i=r,a=i.ordered,l=i.start,u=i.loose;let d="";for(let h=0;h<i.items.length;h++){const c=i.items[h],p=c.checked,k=c.task;let y="";if(c.task){const I=this.renderer.checkbox(!!p);u?c.tokens.length>0&&c.tokens[0].type==="paragraph"?(c.tokens[0].text=I+" "+c.tokens[0].text,c.tokens[0].tokens&&c.tokens[0].tokens.length>0&&c.tokens[0].tokens[0].type==="text"&&(c.tokens[0].tokens[0].text=I+" "+c.tokens[0].tokens[0].text)):c.tokens.unshift({type:"text",text:I+" "}):y+=I+" "}y+=this.parse(c.tokens,u),d+=this.renderer.listitem(y,k,!!p)}n+=this.renderer.list(d,a,l);continue}case"html":{const i=r;n+=this.renderer.html(i.text,i.block);continue}case"paragraph":{const i=r;n+=this.renderer.paragraph(this.parseInline(i.tokens));continue}case"text":{let i=r,a=i.tokens?this.parseInline(i.tokens):i.text;for(;s+1<e.length&&e[s+1].type==="text";)i=e[++s],a+=`
+`+(i.tokens?this.parseInline(i.tokens):i.text);n+=t?this.renderer.paragraph(a):a;continue}default:{const i='Token with "'+r.type+'" type was not found.';if(this.options.silent)return console.error(i),"";throw new Error(i)}}}return n}parseInline(e,t){t=t||this.renderer;let n="";for(let s=0;s<e.length;s++){const r=e[s];if(this.options.extensions&&this.options.extensions.renderers&&this.options.extensions.renderers[r.type]){const i=this.options.extensions.renderers[r.type].call({parser:this},r);if(i!==!1||!["escape","html","link","image","strong","em","codespan","br","del","text"].includes(r.type)){n+=i||"";continue}}switch(r.type){case"escape":{const i=r;n+=t.text(i.text);break}case"html":{const i=r;n+=t.html(i.text);break}case"link":{const i=r;n+=t.link(i.href,i.title,this.parseInline(i.tokens,t));break}case"image":{const i=r;n+=t.image(i.href,i.title,i.text);break}case"strong":{const i=r;n+=t.strong(this.parseInline(i.tokens,t));break}case"em":{const i=r;n+=t.em(this.parseInline(i.tokens,t));break}case"codespan":{const i=r;n+=t.codespan(i.text);break}case"br":{n+=t.br();break}case"del":{const i=r;n+=t.del(this.parseInline(i.tokens,t));break}case"text":{const i=r;n+=t.text(i.text);break}default:{const i='Token with "'+r.type+'" type was not found.';if(this.options.silent)return console.error(i),"";throw new Error(i)}}}return n}}class C{constructor(e){m(this,"options");this.options=e||L}preprocess(e){return e}postprocess(e){return e}processAllTokens(e){return e}}m(C,"passThroughHooks",new Set(["preprocess","postprocess","processAllTokens"]));var R,K,Se;class bt{constructor(...e){ce(this,R);m(this,"defaults",V());m(this,"options",this.setOptions);m(this,"parse",q(this,R,K).call(this,x.lex,$.parse));m(this,"parseInline",q(this,R,K).call(this,x.lexInline,$.parseInline));m(this,"Parser",$);m(this,"Renderer",W);m(this,"TextRenderer",se);m(this,"Lexer",x);m(this,"Tokenizer",j);m(this,"Hooks",C);this.use(...e)}walkTokens(e,t){var s,r;let n=[];for(const i of e)switch(n=n.concat(t.call(this,i)),i.type){case"table":{const a=i;for(const l of a.header)n=n.concat(this.walkTokens(l.tokens,t));for(const l of a.rows)for(const u of l)n=n.concat(this.walkTokens(u.tokens,t));break}case"list":{const a=i;n=n.concat(this.walkTokens(a.items,t));break}default:{const a=i;(r=(s=this.defaults.extensions)==null?void 0:s.childTokens)!=null&&r[a.type]?this.defaults.extensions.childTokens[a.type].forEach(l=>{const u=a[l].flat(1/0);n=n.concat(this.walkTokens(u,t))}):a.tokens&&(n=n.concat(this.walkTokens(a.tokens,t)))}}return n}use(...e){const t=this.defaults.extensions||{renderers:{},childTokens:{}};return e.forEach(n=>{const s={...n};if(s.async=this.defaults.async||s.async||!1,n.extensions&&(n.extensions.forEach(r=>{if(!r.name)throw new Error("extension name required");if("renderer"in r){const i=t.renderers[r.name];i?t.renderers[r.name]=function(...a){let l=r.renderer.apply(this,a);return l===!1&&(l=i.apply(this,a)),l}:t.renderers[r.name]=r.renderer}if("tokenizer"in r){if(!r.level||r.level!=="block"&&r.level!=="inline")throw new Error("extension level must be 'block' or 'inline'");const i=t[r.level];i?i.unshift(r.tokenizer):t[r.level]=[r.tokenizer],r.start&&(r.level==="block"?t.startBlock?t.startBlock.push(r.start):t.startBlock=[r.start]:r.level==="inline"&&(t.startInline?t.startInline.push(r.start):t.startInline=[r.start]))}"childTokens"in r&&r.childTokens&&(t.childTokens[r.name]=r.childTokens)}),s.extensions=t),n.renderer){const r=this.defaults.renderer||new W(this.defaults);for(const i in n.renderer){if(!(i in r))throw new Error(`renderer '${i}' does not exist`);if(i==="options")continue;const a=i,l=n.renderer[a],u=r[a];r[a]=(...d)=>{let h=l.apply(r,d);return h===!1&&(h=u.apply(r,d)),h||""}}s.renderer=r}if(n.tokenizer){const r=this.defaults.tokenizer||new j(this.defaults);for(const i in n.tokenizer){if(!(i in r))throw new Error(`tokenizer '${i}' does not exist`);if(["options","rules","lexer"].includes(i))continue;const a=i,l=n.tokenizer[a],u=r[a];r[a]=(...d)=>{let h=l.apply(r,d);return h===!1&&(h=u.apply(r,d)),h}}s.tokenizer=r}if(n.hooks){const r=this.defaults.hooks||new C;for(const i in n.hooks){if(!(i in r))throw new Error(`hook '${i}' does not exist`);if(i==="options")continue;const a=i,l=n.hooks[a],u=r[a];C.passThroughHooks.has(i)?r[a]=d=>{if(this.defaults.async)return Promise.resolve(l.call(r,d)).then(c=>u.call(r,c));const h=l.call(r,d);return u.call(r,h)}:r[a]=(...d)=>{let h=l.apply(r,d);return h===!1&&(h=u.apply(r,d)),h}}s.hooks=r}if(n.walkTokens){const r=this.defaults.walkTokens,i=n.walkTokens;s.walkTokens=function(a){let l=[];return l.push(i.call(this,a)),r&&(l=l.concat(r.call(this,a))),l}}this.defaults={...this.defaults,...s}}),this}setOptions(e){return this.defaults={...this.defaults,...e},this}lexer(e,t){return x.lex(e,t??this.defaults)}parser(e,t){return $.parse(e,t??this.defaults)}}R=new WeakSet,K=function(e,t){return(n,s)=>{const r={...s},i={...this.defaults,...r};this.defaults.async===!0&&r.async===!1&&(i.silent||console.warn("marked(): The async option was set to true by an extension. The async: false option sent to parse will be ignored."),i.async=!0);const a=q(this,R,Se).call(this,!!i.silent,!!i.async);if(typeof n>"u"||n===null)return a(new Error("marked(): input parameter is undefined or null"));if(typeof n!="string")return a(new Error("marked(): input parameter is of type "+Object.prototype.toString.call(n)+", string expected"));if(i.hooks&&(i.hooks.options=i),i.async)return Promise.resolve(i.hooks?i.hooks.preprocess(n):n).then(l=>e(l,i)).then(l=>i.hooks?i.hooks.processAllTokens(l):l).then(l=>i.walkTokens?Promise.all(this.walkTokens(l,i.walkTokens)).then(()=>l):l).then(l=>t(l,i)).then(l=>i.hooks?i.hooks.postprocess(l):l).catch(a);try{i.hooks&&(n=i.hooks.preprocess(n));let l=e(n,i);i.hooks&&(l=i.hooks.processAllTokens(l)),i.walkTokens&&this.walkTokens(l,i.walkTokens);let u=t(l,i);return i.hooks&&(u=i.hooks.postprocess(u)),u}catch(l){return a(l)}}},Se=function(e,t){return n=>{if(n.message+=`
+Please report this to https://github.com/markedjs/marked.`,e){const s="<p>An error occurred:</p><pre>"+b(n.message+"",!0)+"</pre>";return t?Promise.resolve(s):s}if(t)return Promise.reject(n);throw n}};const S=new bt;function g(o,e){return S.parse(o,e)}g.options=g.setOptions=function(o){return S.setOptions(o),g.defaults=S.defaults,ke(g.defaults),g};g.getDefaults=V;g.defaults=L;g.use=function(...o){return S.use(...o),g.defaults=S.defaults,ke(g.defaults),g};g.walkTokens=function(o,e){return S.walkTokens(o,e)};g.parseInline=S.parseInline;g.Parser=$;g.parser=$.parse;g.Renderer=W;g.TextRenderer=se;g.Lexer=x;g.lexer=x.lex;g.Tokenizer=j;g.Hooks=C;g.parse=g;g.options;g.setOptions;g.use;g.walkTokens;g.parseInline;$.parse;x.lex;g.setOptions({breaks:!0,gfm:!0});function Re(o){const e=/^---\n([\s\S]*?)\n---\n/,t=o.match(e);if(!t)return{metadata:{},content:o};const n=t[1],s=o.slice(t[0].length),r={};return n.split(`
+`).forEach(i=>{const a=i.indexOf(":");if(a>0){const l=i.slice(0,a).trim(),u=i.slice(a+1).trim().replace(/^["']|["']$/g,"");r[l]=u}}),{metadata:r,content:s}}function wt(o){return g.parse(o)}function vt(o,e=150){const{content:t}=Re(o),n=t.replace(/#{1,6}\s+/g,"").replace(/\*\*|__/g,"").replace(/\*|_/g,"").replace(/\[([^\]]+)\]\([^)]+\)/g,"$1").replace(/`([^`]+)`/g,"$1").replace(/\n+/g," ").trim();return n.length<=e?n:n.slice(0,e).trim()+"..."}function z(o){return new Date(o).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})}const v={omdb:{key:localStorage.getItem("omdb_api_key")||"5a9c220",baseUrl:"https://www.omdbapi.com/"},googleBooks:{key:localStorage.getItem("google_books_api_key")||"AIzaSyDgaT02T_UCvHBHaQ5aKAWtVPO6xGXd-E4",baseUrl:"https://www.googleapis.com/books/v1/volumes"},deezer:{baseUrl:"https://api.deezer.com"}};function yt(o){o.omdb&&(localStorage.setItem("omdb_api_key",o.omdb),v.omdb.key=o.omdb),o.googleBooks&&(localStorage.setItem("google_books_api_key",o.googleBooks),v.googleBooks.key=o.googleBooks)}function xt(){return{omdb:v.omdb.key,googleBooks:v.googleBooks.key}}function $t(o){switch(o){case"film":return!!v.omdb.key;case"book":return!0;case"song":return!0;default:return!1}}async function Tt(o){if(!v.omdb.key)throw new Error("OMDb API key not configured. Please add it in the admin settings.");const e=`${v.omdb.baseUrl}?apikey=${v.omdb.key}&s=${encodeURIComponent(o)}&type=movie`,n=await(await fetch(e)).json();if(n.Error){if(n.Error==="Movie not found!")return[];throw new Error(n.Error)}return(n.Search||[]).map(s=>({id:s.imdbID,title:s.Title,year:s.Year,imageUrl:s.Poster!=="N/A"?s.Poster:null,externalUrl:`https://www.imdb.com/title/${s.imdbID}`,type:"film"}))}async function Et(o){let e=`${v.googleBooks.baseUrl}?q=${encodeURIComponent(o)}&maxResults=10`;v.googleBooks.key&&(e+=`&key=${v.googleBooks.key}`);const n=await(await fetch(e)).json();if(n.error)throw new Error(n.error.message);return(n.items||[]).map(s=>{var i,a;const r=s.volumeInfo;return{id:s.id,title:r.title,author:r.authors?r.authors.join(", "):"Unknown",year:r.publishedDate?r.publishedDate.split("-")[0]:"",imageUrl:((a=(i=r.imageLinks)==null?void 0:i.thumbnail)==null?void 0:a.replace("http:","https:"))||null,externalUrl:r.infoLink,type:"book"}})}async function It(o){const e=`https://corsproxy.io/?${encodeURIComponent(`${v.deezer.baseUrl}/search?q=${encodeURIComponent(o)}&limit=10`)}`;try{const n=await(await fetch(e)).json();if(n.error)throw new Error(n.error.message||"Deezer search failed");return(n.data||[]).map(s=>{var r,i,a,l;return{id:s.id.toString(),title:s.title,artist:((r=s.artist)==null?void 0:r.name)||"Unknown Artist",album:((i=s.album)==null?void 0:i.title)||"",year:"",imageUrl:((a=s.album)==null?void 0:a.cover_medium)||((l=s.album)==null?void 0:l.cover)||null,externalUrl:s.link,type:"song"}})}catch{return St(o)}}async function St(o){const e=`https://www.theaudiodb.com/api/v1/json/2/search.php?s=${encodeURIComponent(o)}`;try{const n=await(await fetch(e)).json();return!n.artists||n.artists.length===0?[]:n.artists.slice(0,10).map(s=>({id:s.idArtist,title:s.strArtist,artist:s.strGenre||"Music",year:s.intFormedYear||"",imageUrl:s.strArtistThumb||null,externalUrl:s.strWebsite?`https://${s.strWebsite}`:`https://www.theaudiodb.com/artist/${s.idArtist}`,type:"song"}))}catch{throw new Error("Song search is currently unavailable. Please try again later.")}}async function Rt(o,e){if(!o.trim())return[];switch(e){case"film":return Tt(o);case"book":return Et(o);case"song":return It(o);default:throw new Error(`Unknown media type: ${e}`)}}function T(o){return{film:{label:"Film",color:"#ef4444"},book:{label:"Book",color:"#3b82f6"},song:{label:"Song",color:"#22c55e"}}[o]||{label:o,color:"#6366f1"}}const ie="zuber_seth_admin_auth",Lt="admin123";function zt(){return localStorage.getItem(ie)==="authenticated"}function At(o){const e=localStorage.getItem("admin_password")||Lt;return o===e?(localStorage.setItem(ie,"authenticated"),!0):!1}function _t(){localStorage.removeItem(ie)}function Bt(o){localStorage.setItem("admin_password",o)}function _(){const o=localStorage.getItem("writings_data");return o?JSON.parse(o):{writings:[]}}function Le(o){localStorage.setItem("writings_data",JSON.stringify(o))}function U(){const o=localStorage.getItem("media_data");return o?JSON.parse(o):{media:[]}}function ze(o){localStorage.setItem("media_data",JSON.stringify(o))}function Mt(o,e,t){const n=_(),s=Date.now().toString(36)+Math.random().toString(36).substr(2);return n.writings.push({id:s,title:o,date:e,content:t}),Le(n),s}function Ct(o){const e=_();e.writings=e.writings.filter(t=>t.id!==o),Le(e)}function Pt(o,e,t){const n=U(),s=Date.now().toString(36)+Math.random().toString(36).substr(2);return n.media.push({id:s,type:o.type,title:o.title,artist:o.artist||o.author||"",year:o.year||"",imageUrl:o.imageUrl,externalUrl:o.externalUrl,rating:e,review:t,date:new Date().toISOString().split("T")[0]}),ze(n),s}function Dt(o){const e=U();e.media=e.media.filter(t=>t.id!==o),ze(e)}function Ae(o){o.innerHTML=`
+        <div class="container">
+            <div class="login-container fade-in">
+                <div class="card login-card">
+                    <h2 class="login-title">Admin Login</h2>
+                    <form class="login-form" id="login-form">
+                        <div class="form-group">
+                            <input 
+                                type="password" 
+                                class="form-input" 
+                                id="password-input"
+                                placeholder="Enter password"
+                                autocomplete="current-password"
+                            >
+                        </div>
+                        <div class="form-error" id="login-error" style="display: none;"></div>
+                        <button type="submit" class="btn btn-primary btn-full">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;const e=document.getElementById("login-form"),t=document.getElementById("login-error");e.addEventListener("submit",n=>{n.preventDefault();const s=document.getElementById("password-input").value;At(s)?_e(o):(t.textContent="Incorrect password",t.style.display="block")})}function _e(o){o.innerHTML=`
+        <div class="container admin-container fade-in">
+            <div class="admin-header">
+                <h1 class="admin-title">Admin Dashboard</h1>
+                <button class="btn btn-secondary" id="logout-btn">Logout</button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="writing">Add Writing</button>
+                <button class="admin-tab" data-tab="media">Add Media Review</button>
+                <button class="admin-tab" data-tab="manage">Manage Content</button>
+                <button class="admin-tab" data-tab="settings">Settings</button>
+            </div>
+            
+            <div id="admin-content">
+                <!-- Tab content will be rendered here -->
+            </div>
+        </div>
+    `;const e=document.querySelectorAll(".admin-tab");e.forEach(t=>{t.addEventListener("click",()=>{e.forEach(n=>n.classList.remove("active")),t.classList.add("active"),fe(t.dataset.tab)})}),document.getElementById("logout-btn").addEventListener("click",()=>{_t(),Ae(o)}),fe("writing")}function fe(o){const e=document.getElementById("admin-content");switch(o){case"writing":Ut(e);break;case"media":qt(e);break;case"manage":J(e);break;case"settings":Ot(e);break}}function Ut(o){o.innerHTML=`
+        <div class="card">
+            <h3 style="margin-bottom: var(--space-6);">Upload New Writing</h3>
+            
+            <div class="upload-zone" id="upload-zone">
+                <div class="upload-icon" style="font-size: var(--text-4xl); opacity: 0.3;">+</div>
+                <p class="upload-text">Drag and drop a Markdown file here</p>
+                <p class="upload-hint">or click to browse</p>
+                <input type="file" id="file-input" accept=".md,.markdown,.txt" style="display: none;">
+            </div>
+            
+            <div id="file-preview" style="display: none; margin-top: var(--space-6);">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-input" id="writing-title" placeholder="Article title">
+                </div>
+                
+                <div class="form-group" style="margin-top: var(--space-4);">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-input" id="writing-date">
+                </div>
+                
+                <div class="form-group" style="margin-top: var(--space-4);">
+                    <label class="form-label">Content Preview</label>
+                    <textarea class="form-textarea" id="writing-content" rows="10"></textarea>
+                </div>
+                
+                <button class="btn btn-primary" id="save-writing" style="margin-top: var(--space-4);">
+                    Save Writing
+                </button>
+            </div>
+        </div>
+    `;const e=document.getElementById("upload-zone"),t=document.getElementById("file-input"),n=document.getElementById("file-preview");e.addEventListener("click",()=>t.click()),e.addEventListener("dragover",r=>{r.preventDefault(),e.classList.add("dragover")}),e.addEventListener("dragleave",()=>{e.classList.remove("dragover")}),e.addEventListener("drop",r=>{r.preventDefault(),e.classList.remove("dragover");const i=r.dataTransfer.files[0];i&&s(i)}),t.addEventListener("change",r=>{const i=r.target.files[0];i&&s(i)});function s(r){const i=new FileReader;i.onload=a=>{const l=a.target.result;let u=r.name.replace(/\.(md|markdown|txt)$/,"").replace(/-/g," ");const d=l.match(/^#\s+(.+)$/m);d&&(u=d[1]),document.getElementById("writing-title").value=u,document.getElementById("writing-date").value=new Date().toISOString().split("T")[0],document.getElementById("writing-content").value=l,n.style.display="block",e.style.display="none"},i.readAsText(r)}document.getElementById("save-writing").addEventListener("click",()=>{const r=document.getElementById("writing-title").value.trim(),i=document.getElementById("writing-date").value,a=document.getElementById("writing-content").value;if(!r||!i||!a){w("Please fill in all fields","error");return}Mt(r,i,a),w("Writing saved successfully!","success"),n.style.display="none",e.style.display="block",document.getElementById("writing-title").value="",document.getElementById("writing-content").value=""})}function qt(o){o.innerHTML=`
+        <div class="card">
+            <h3 style="margin-bottom: var(--space-6);">Add Media Review</h3>
+            
+            <div class="search-container">
+                <div class="search-form">
+                    <select class="search-type-select" id="media-type">
+                        <option value="film">Film</option>
+                        <option value="book">Book</option>
+                        <option value="song">Song</option>
+                    </select>
+                    <input 
+                        type="text" 
+                        class="form-input search-input" 
+                        id="media-search"
+                        placeholder="Search for a film, book, or song..."
+                    >
+                    <button class="btn btn-primary" id="search-btn">Search</button>
+                </div>
+            </div>
+            
+            <div id="search-results" class="search-results"></div>
+            
+            <div id="review-form" class="review-form" style="display: none;">
+                <h4 style="margin-bottom: var(--space-4);">Write Your Review</h4>
+                
+                <div id="selected-media-info" style="margin-bottom: var(--space-4);"></div>
+                
+                <div class="form-group">
+                    <label class="form-label">Rating</label>
+                    <div class="rating-input" id="rating-input">
+                        ${[1,2,3,4,5].map(c=>`<span class="rating-star" data-rating="${c}">★</span>`).join("")}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Review (max 100 words)</label>
+                    <textarea 
+                        class="form-textarea" 
+                        id="review-text" 
+                        placeholder="Write your review..."
+                        rows="4"
+                    ></textarea>
+                    <div class="word-count"><span id="word-count">0</span>/100 words</div>
+                </div>
+                
+                <button class="btn btn-primary" id="save-review">Save Review</button>
+            </div>
+        </div>
+    `;let e=null,t=0;const n=document.getElementById("media-search"),s=document.getElementById("search-btn"),r=document.getElementById("media-type"),i=document.getElementById("search-results"),a=document.getElementById("review-form");r.addEventListener("change",()=>{const c=r.value;$t(c)||w(`${T(c).label} search requires API configuration. Check Settings.`,"error")});async function l(){const c=n.value.trim(),p=r.value;if(c){i.innerHTML='<div class="loading"><div class="spinner"></div></div>',a.style.display="none",e=null;try{const k=await Rt(c,p);u(k)}catch(k){i.innerHTML=`<p style="color: var(--color-error);">${k.message}</p>`}}}s.addEventListener("click",l),n.addEventListener("keypress",c=>{c.key==="Enter"&&l()});function u(c){if(c.length===0){i.innerHTML='<p style="color: var(--color-text-muted);">No results found</p>';return}i.innerHTML=c.map(p=>`
+            <div class="search-result-item" data-id="${p.id}">
+                <div class="search-result-image">
+                    ${p.imageUrl?`<img src="${p.imageUrl}" alt="${p.title}">`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1rem;color:var(--color-text-muted);">${T(p.type).label}</div>`}
+                </div>
+                <div class="search-result-info">
+                    <div class="search-result-title">${p.title}</div>
+                    <div class="search-result-meta">${p.artist||p.author||""} ${p.year?`(${p.year})`:""}</div>
+                </div>
+            </div>
+        `).join(""),window._searchResults=c,i.querySelectorAll(".search-result-item").forEach(p=>{p.addEventListener("click",()=>{i.querySelectorAll(".search-result-item").forEach(k=>k.classList.remove("selected")),p.classList.add("selected"),e=window._searchResults.find(k=>k.id===p.dataset.id),d(e)})})}function d(c){const p=document.getElementById("selected-media-info");p.innerHTML=`
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+                ${c.imageUrl?`<img src="${c.imageUrl}" style="width: 60px; height: 60px; object-fit: cover; border-radius: var(--radius-md);">`:""}
+                <div>
+                    <strong>${c.title}</strong><br>
+                    <span style="color: var(--color-text-muted);">${c.artist||c.author||""} ${c.year?`(${c.year})`:""}</span>
+                </div>
+            </div>
+        `,t=0,document.querySelectorAll(".rating-star").forEach(k=>k.classList.remove("active")),document.getElementById("review-text").value="",document.getElementById("word-count").textContent="0",a.style.display="block"}document.getElementById("rating-input").addEventListener("click",c=>{c.target.classList.contains("rating-star")&&(t=parseInt(c.target.dataset.rating),document.querySelectorAll(".rating-star").forEach(p=>{p.classList.toggle("active",parseInt(p.dataset.rating)<=t)}))});const h=document.getElementById("review-text");h.addEventListener("input",()=>{const p=h.value.trim().split(/\s+/).filter(k=>k.length>0).length;document.getElementById("word-count").textContent=p,p>100?document.getElementById("word-count").style.color="var(--color-error)":document.getElementById("word-count").style.color=""}),document.getElementById("save-review").addEventListener("click",()=>{if(!e){w("Please select a media item","error");return}if(t===0){w("Please select a rating","error");return}const c=h.value.trim();if(c.split(/\s+/).filter(k=>k.length>0).length>100){w("Review must be 100 words or less","error");return}Pt(e,t,c),w("Review saved successfully!","success"),i.innerHTML="",a.style.display="none",n.value="",e=null})}function J(o){const e=_().writings,t=U().media;o.innerHTML=`
+        <div class="card" style="margin-bottom: var(--space-6);">
+            <h3 style="margin-bottom: var(--space-6);">Writings (${e.length})</h3>
+            <div class="content-list" id="writings-list">
+                ${e.length===0?'<p style="color: var(--color-text-muted);">No writings yet</p>':e.map(n=>`
+                        <div class="content-item">
+                            <div class="content-item-info">
+                                <div class="content-item-title">${n.title}</div>
+                                <div class="content-item-meta">${z(n.date)}</div>
+                            </div>
+                            <div class="content-item-actions">
+                                <button class="btn btn-danger btn-sm" data-delete-writing="${n.id}">Delete</button>
+                            </div>
+                        </div>
+                    `).join("")}
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: var(--space-6);">Media Reviews (${t.length})</h3>
+            <div class="content-list" id="media-list">
+                ${t.length===0?'<p style="color: var(--color-text-muted);">No media reviews yet</p>':t.map(n=>`
+                        <div class="content-item">
+                            <div class="content-item-image">
+                                ${n.imageUrl?`<img src="${n.imageUrl}" alt="${n.title}">`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;background:var(--color-bg-secondary);font-size:0.75rem;color:var(--color-text-muted);">${T(n.type).label}</div>`}
+                            </div>
+                            <div class="content-item-info">
+                                <div class="content-item-title">${n.title}</div>
+                                <div class="content-item-meta">
+                                    ${T(n.type).label} • ${"★".repeat(n.rating)}${"☆".repeat(5-n.rating)} • ${z(n.date)}
+                                </div>
+                            </div>
+                            <div class="content-item-actions">
+                                <button class="btn btn-danger btn-sm" data-delete-media="${n.id}">Delete</button>
+                            </div>
+                        </div>
+                    `).join("")}
+            </div>
+        </div>
+    `,o.querySelectorAll("[data-delete-writing]").forEach(n=>{n.addEventListener("click",()=>{confirm("Are you sure you want to delete this writing?")&&(Ct(n.dataset.deleteWriting),w("Writing deleted","success"),J(o))})}),o.querySelectorAll("[data-delete-media]").forEach(n=>{n.addEventListener("click",()=>{confirm("Are you sure you want to delete this review?")&&(Dt(n.dataset.deleteMedia),w("Review deleted","success"),J(o))})})}function Ot(o){const e=xt();o.innerHTML=`
+        <div class="card" style="margin-bottom: var(--space-6);">
+            <h3 style="margin-bottom: var(--space-6);">Change Password</h3>
+            <div class="form-group">
+                <input type="password" class="form-input" id="new-password" placeholder="New password">
+            </div>
+            <button class="btn btn-primary" id="change-password" style="margin-top: var(--space-4);">
+                Change Password
+            </button>
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: var(--space-6);">API Keys</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-6);">
+                Configure API keys for media search. These are stored locally in your browser.
+            </p>
+            
+            <div class="form-group" style="margin-bottom: var(--space-4);">
+                <label class="form-label">OMDb API Key (for films)</label>
+                <input type="text" class="form-input" id="omdb-key" value="${e.omdb}" placeholder="Get from omdbapi.com">
+            </div>
+            
+            <div class="form-group" style="margin-bottom: var(--space-4);">
+                <label class="form-label">Google Books API Key (optional)</label>
+                <input type="text" class="form-input" id="google-books-key" value="${e.googleBooks}" placeholder="Get from Google Cloud Console">
+            </div>
+            
+            <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-4);">
+                Song search uses Deezer (no API key required).
+            </p>
+            
+            <button class="btn btn-primary" id="save-api-keys" style="margin-top: var(--space-4);">
+                Save API Keys
+            </button>
+        </div>
+    `,document.getElementById("change-password").addEventListener("click",()=>{const t=document.getElementById("new-password").value;if(t.length<4){w("Password must be at least 4 characters","error");return}Bt(t),w("Password changed successfully","success"),document.getElementById("new-password").value=""}),document.getElementById("save-api-keys").addEventListener("click",()=>{yt({omdb:document.getElementById("omdb-key").value.trim(),googleBooks:document.getElementById("google-books-key").value.trim()}),w("API keys saved successfully","success")})}function w(o,e="success"){let t=document.querySelector(".toast-container");t||(t=document.createElement("div"),t.className="toast-container",document.body.appendChild(t));const n=document.createElement("div");n.className=`toast toast-${e}`,n.textContent=o,t.appendChild(n),setTimeout(()=>{n.remove()},3e3)}const A=new De,E=document.getElementById("main-content");function Be(o){return Array(5).fill(0).map((e,t)=>`<span class="star ${t<o?"filled":""}">★</span>`).join("")}A.on("/",()=>{const o=_().writings,e=U().media,t=[...o].sort((s,r)=>new Date(r.date)-new Date(s.date)).slice(0,8),n=[...e].sort((s,r)=>new Date(r.date)-new Date(s.date)).slice(0,8);E.innerHTML=`
+        <div class="container home-container fade-in">
+            <!-- Writing Shelf -->
+            <section class="bookshelf">
+                <div class="shelf-header">
+                    <h2 class="shelf-title">Writing</h2>
+                    ${o.length>0?'<a href="#/writing" class="shelf-link">View all</a>':""}
+                </div>
+                <div class="shelf-content">
+                    ${t.length===0?'<div class="shelf-empty">No writings yet</div>':`<div class="shelf-scroll">
+                            ${t.map(s=>`
+                                <a href="#/writing/${s.id}" class="shelf-item shelf-item-writing">
+                                    <div class="shelf-item-spine"></div>
+                                    <div class="shelf-item-content">
+                                        <span class="shelf-item-date">${z(s.date)}</span>
+                                        <h3 class="shelf-item-title">${s.title}</h3>
+                                    </div>
+                                </a>
+                            `).join("")}
+                          </div>`}
+                </div>
+                <div class="shelf-base"></div>
+            </section>
+
+            <!-- Media Shelf -->
+            <section class="bookshelf">
+                <div class="shelf-header">
+                    <h2 class="shelf-title">Media</h2>
+                    ${e.length>0?'<a href="#/media" class="shelf-link">View all</a>':""}
+                </div>
+                <div class="shelf-content">
+                    ${n.length===0?'<div class="shelf-empty">No media yet</div>':`<div class="shelf-scroll">
+                            ${n.map(s=>`
+                                <a href="#/media" class="shelf-item shelf-item-media">
+                                    ${s.imageUrl?`<img src="${s.imageUrl}" alt="${s.title}" class="shelf-item-cover">`:`<div class="shelf-item-cover shelf-item-cover-placeholder">${T(s.type).label}</div>`}
+                                    <div class="shelf-item-info">
+                                        <span class="shelf-item-type">${T(s.type).label}</span>
+                                        <div class="shelf-item-rating">${Be(s.rating)}</div>
+                                    </div>
+                                </a>
+                            `).join("")}
+                          </div>`}
+                </div>
+                <div class="shelf-base"></div>
+            </section>
+        </div>
+    `});A.on("/writing",()=>{const o=_().writings;if(o.length===0){E.innerHTML=`
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h1 class="section-title">Writing</h1>
+                </div>
+                <div class="empty-state">
+                    <h2 class="empty-state-title">No writings yet</h2>
+                    <p class="empty-state-text">Check back soon for new content.</p>
+                </div>
+            </div>
+        `;return}const e=[...o].sort((t,n)=>new Date(n.date)-new Date(t.date));E.innerHTML=`
+        <div class="container">
+            <div class="section-header fade-in">
+                <h1 class="section-title">Writing</h1>
+            </div>
+            <div class="writings-grid fade-in">
+                ${e.map(t=>`
+                    <a href="#/writing/${t.id}" class="card card-clickable writing-card">
+                        <span class="writing-card-date">${z(t.date)}</span>
+                        <h2 class="writing-card-title">${t.title}</h2>
+                        <p class="writing-card-excerpt">${vt(t.content)}</p>
+                    </a>
+                `).join("")}
+            </div>
+        </div>
+    `});A.on("/writing/:id",o=>{const t=_().writings.find(i=>i.id===o.id);if(!t){A.show404();return}const{metadata:n,content:s}=Re(t.content),r=wt(s);E.innerHTML=`
+        <div class="container article-container fade-in">
+            <div class="article-header">
+                <a href="#/writing" class="article-back">← Back to Writing</a>
+                <h1 class="article-title">${t.title}</h1>
+                <p class="article-date">${z(t.date)}</p>
+            </div>
+            <div class="article-content">
+                ${r}
+            </div>
+        </div>
+    `});A.on("/media",()=>{const o=U().media;if(o.length===0){E.innerHTML=`
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h1 class="section-title">Media</h1>
+                </div>
+                <div class="empty-state">
+                    <h2 class="empty-state-title">No reviews yet</h2>
+                    <p class="empty-state-text">Check back soon for media reviews.</p>
+                </div>
+            </div>
+        `;return}const e=[...o].sort((n,s)=>new Date(s.date)-new Date(n.date)),t=[...new Set(e.map(n=>n.type))];E.innerHTML=`
+        <div class="container">
+            <div class="section-header fade-in">
+                <h1 class="section-title">Media</h1>
+            </div>
+            
+            <div class="media-filters fade-in">
+                <button class="filter-btn active" data-filter="all">All</button>
+                ${t.map(n=>`
+                    <button class="filter-btn" data-filter="${n}">${T(n).label}s</button>
+                `).join("")}
+            </div>
+            
+            <div class="media-grid fade-in" id="media-grid">
+                ${me(e)}
+            </div>
+        </div>
+    `,document.querySelectorAll(".filter-btn").forEach(n=>{n.addEventListener("click",()=>{document.querySelectorAll(".filter-btn").forEach(i=>i.classList.remove("active")),n.classList.add("active");const s=n.dataset.filter,r=s==="all"?e:e.filter(i=>i.type===s);document.getElementById("media-grid").innerHTML=me(r)})})});function me(o){return o.map(e=>`
+        <div class="card media-card">
+            <div class="media-card-image">
+                ${e.imageUrl?`<img src="${e.imageUrl}" alt="${e.title}">`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1rem;color:var(--color-text-muted);background:var(--color-bg-tertiary);">${T(e.type).label}</div>`}
+                <div class="media-card-overlay">
+                    <a href="${e.externalUrl}" target="_blank" rel="noopener noreferrer" class="media-card-link">
+                        View on ${e.type==="film"?"IMDb":e.type==="book"?"Google Books":"Spotify"} →
+                    </a>
+                </div>
+            </div>
+            <div class="media-card-content">
+                <span class="media-card-type">${T(e.type).label}</span>
+                <h3 class="media-card-title">${e.title}</h3>
+                <div class="star-rating">${Be(e.rating)}</div>
+                ${e.review?`<p class="media-card-review">${e.review}</p>`:""}
+                <span class="media-card-date">${z(e.date)}</span>
+            </div>
+        </div>
+    `).join("")}A.on("/admin",()=>{zt()?_e(E):Ae(E)});console.log("Zuber Seth Personal Website initialized");
