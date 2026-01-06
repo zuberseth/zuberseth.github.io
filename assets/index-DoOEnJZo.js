@@ -419,13 +419,18 @@ Please report this to https://github.com/markedjs/marked.`,e){const s="<p>An err
                 ${Me(t)}
             </div>
         </div>
-    `,document.querySelectorAll(".filter-btn").forEach(s=>{s.addEventListener("click",()=>{document.querySelectorAll(".filter-btn").forEach(o=>o.classList.remove("active")),s.classList.add("active");const i=s.dataset.filter,r=i==="all"?t:t.filter(o=>o.type===i);document.getElementById("media-grid").innerHTML=Me(r)})})});function Me(a){return a.map(e=>`
+    `,document.querySelectorAll(".filter-btn").forEach(s=>{s.addEventListener("click",()=>{document.querySelectorAll(".filter-btn").forEach(o=>o.classList.remove("active")),s.classList.add("active");const i=s.dataset.filter,r=i==="all"?t:t.filter(o=>o.type===i);document.getElementById("media-grid").innerHTML=Me(r)})})});function Me(a){return a.map(e=>{let t;e.type==="restaurant"?t=`
+                <div class="restaurant-cover">
+                    <span class="restaurant-cover-name">${e.title}</span>
+                    <span class="restaurant-cover-location">${e.artist||""}</span>
+                </div>
+            `:t=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1rem;color:var(--color-text-muted);background:var(--color-bg-tertiary);">${L(e.type).label}</div>`;let n;switch(e.type){case"film":n="View on IMDb";break;case"book":n="View on Open Library";break;case"restaurant":n="Search on Google";break;default:n="View on Deezer"}return`
         <div class="card media-card">
             <div class="media-card-image">
-                ${e.imageUrl?`<img src="${e.imageUrl}" alt="${e.title}">`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1rem;color:var(--color-text-muted);background:var(--color-bg-tertiary);">${L(e.type).label}</div>`}
+                ${e.imageUrl?`<img src="${e.imageUrl}" alt="${e.title}">`:t}
                 <div class="media-card-overlay">
                     <a href="${e.externalUrl}" target="_blank" rel="noopener noreferrer" class="media-card-link">
-                        View on ${e.type==="film"?"IMDb":e.type==="book"?"Open Library":"Deezer"} →
+                        ${n} →
                     </a>
                 </div>
             </div>
@@ -437,4 +442,4 @@ Please report this to https://github.com/markedjs/marked.`,e){const s="<p>An err
                 <span class="media-card-date">${P(e.date)}</span>
             </div>
         </div>
-    `).join("")}_.on("/admin",()=>{dn()?Xe(z):Ye(z)});tn(()=>{(window.location.hash==="#/"||window.location.hash===""||window.location.hash.startsWith("#/writing"))&&_.navigate(window.location.hash||"#/")},()=>{(window.location.hash==="#/"||window.location.hash===""||window.location.hash==="#/media")&&_.navigate(window.location.hash||"#/")});console.log("Zuber Seth Personal Website initialized with Firebase");
+    `}).join("")}_.on("/admin",()=>{dn()?Xe(z):Ye(z)});tn(()=>{(window.location.hash==="#/"||window.location.hash===""||window.location.hash.startsWith("#/writing"))&&_.navigate(window.location.hash||"#/")},()=>{(window.location.hash==="#/"||window.location.hash===""||window.location.hash==="#/media")&&_.navigate(window.location.hash||"#/")});console.log("Zuber Seth Personal Website initialized with Firebase");
